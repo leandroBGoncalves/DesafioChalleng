@@ -7,13 +7,20 @@ export const HeaderContainerAll = styled.header`
     height: 80px;
     background: #FFFFFF;
 
-    div {
-        width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+
+`
+
+export const BoxAdd = styled.div`
+        width: 90%;
         height: 100%;
         padding: 0 10rem;
         display: flex;
         align-items: center;
         justify-content: space-between;
+
 
         h5 {
             font-family: Montserrat, sans-serif;
@@ -46,6 +53,8 @@ export const HeaderContainerAll = styled.header`
                 filter: brightness(0.9);
             }
         }
-    }
+`;
 
-`
+export const BoxRetur = styled.div`
+    width: 10%;
+`;

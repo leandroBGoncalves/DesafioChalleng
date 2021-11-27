@@ -73,6 +73,46 @@ export const ContentLupa = styled.div`
     }
 `
 
+export const ContentStatus = styled.div`
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    div {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 25px;
+        width: fit-content;
+        padding: 5px 15px;
+        border: 1px solid #BBB8D9;
+        border-radius: 25px;
+
+        font-family: Inter, sans-serif;
+        font-weight: 400;
+        font-size: 0.8rem;
+        color: #302E45;
+
+        & + div {
+            margin-left: 15px;
+        }
+    }
+
+    @media (max-width: 720px) {
+        flex-direction: column;
+        align-items: center;
+        width: 25%;
+
+        div {
+            & + div {
+                margin-left: 0;
+                margin-top: 5px;
+            }
+        }
+    }
+`
+
 export const ContainertLupa = styled.div`
     width: 100%;
     height: 2.5rem;

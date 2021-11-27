@@ -1,13 +1,20 @@
-import { HeaderContainerAll } from "./styleHeader";
+import { BoxRetur, HeaderContainerAll, BoxAdd } from "./styleHeader";
 
+interface HeaderProps {
+    title: string,
+    button: Boolean
+}
 
-export default function Header() {
+export default function Header({title, button}: HeaderProps) {
     return (
         <HeaderContainerAll>
-            <div>
-                <h5>Empreendimentos</h5>
-                <button>Adicionar +</button>
-            </div>
+            <BoxRetur>
+                <img src="/images/Return.svg" alt="Icone Retornar" />
+            </BoxRetur>
+            <BoxAdd>
+                <h5>{title}</h5>
+                {button && <button>Adicionar +</button>}
+            </BoxAdd>
         </HeaderContainerAll>
     )
 }
