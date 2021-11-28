@@ -20,8 +20,8 @@
       {
         "_id": "PA01",
         "name": "Sirius Vila Bastos",
-        "status": "RELEASE",
-        "purpose": "HOME",
+        "status": "Lançamento",
+        "purpose": "Comercial",
         "ri_number":  "123321",
         "address": {
           "district": "Vila Bastos",
@@ -35,8 +35,8 @@
       {
         "_id": "PA02",
         "name": "Moriah Ipiranga",
-        "status": "RELEASE",
-        "purpose": "HOME",
+        "status": "Pronto para morar",
+        "purpose": "Residencial",
         "ri_number":  "321123",
         "address": {
           "street": "Rua Lucinda Ferreira",
@@ -50,8 +50,8 @@
       {
         "_id": "PA03",
         "name": "Sirius Campinas",
-        "status": "RELEASE",
-        "purpose": "HOME",
+        "status": "Breve lançamento",
+        "purpose": "Residencial",
         "ri_number":  "987654",
         "address": {
           "street": "Av. Aquidabã",

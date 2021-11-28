@@ -5,13 +5,36 @@ import { BoxSelect, ConatinerNew, ContentNew, HeaderNew, ResultCep } from "./sty
 import Header from '../Header/index';
 import ButtonFooter from "../buttonFooter/buttonFooter";
 
-export default function NewEnterprise() {
-    const [currency, setCurrency] = useState('Lançamento');
-    const [name, setName] = useState('Nome do empreendimento');
-    const [status, setStatus] = useState('Residencial');
-    const [cep, setCep] = useState('CEP');
-    const [number, setNumber] = useState('Numero')
+interface NewEnterpriseProps {
+  handleHome: () => void,
+  ShowData: {
+    id: string,
+    name: string,
+    purpose: string,
+    status: string,
+    address: {
+        street: string,
+        number: number,
+        district: string,
+        city: string,
+        state: string,
+        cep: string,
+    }
+},
+  isEdit: boolean,
+  closeModal: () => void,
+}
 
+export default function NewEnterprise({handleHome, ShowData, isEdit, closeModal}: NewEnterpriseProps) {
+    const [currency, setCurrency] = useState('Lançamento');
+    const [name, setName] = useState(isEdit ? ShowData.name : 'Nome do empreendimento');
+    const [status, setStatus] = useState('Residencial');
+    const [cep, setCep] = useState(isEdit ? ShowData.address.cep : 'CEP');
+    const [number, setNumber] = useState(isEdit ? ShowData.address.number : 'Numero')
+
+    function handleHomeFromEdit() {
+      closeModal(false);
+    }
 
     const currencies = [
         {
@@ -27,9 +50,10 @@ export default function NewEnterprise() {
           label: 'Em obras',
         },
         {
-          value: 'Pronto pra morar',
-          label: 'Pronto pra morar  ',
+          value: 'Pronto para morar',
+          label: 'Pronto para morar',
         },
+
       ];
 
       const HereStatus = [
@@ -45,7 +69,7 @@ export default function NewEnterprise() {
 
     return (
         <>
-        <Header title="Cadastro de empreendimento" button={false} IconReturn={true} PushButton/>
+        <Header title={isEdit ? "Editar empreendimento" : "Cadastro de empreendimento"} button={false} IconReturn={true} PushButton={handleHome} PushButtonReturn={isEdit ? handleHomeFromEdit : handleHome}/>
         <ConatinerNew>
             <ContentNew>
                 <HeaderNew>
@@ -58,7 +82,7 @@ export default function NewEnterprise() {
                         <TextField
                               id="standard-select-currency"
                               select
-                              value={currency}
+                              value={isEdit ? ShowData.status : currency}
                               onChange={(e) => {
                                 setCurrency(e.target.value)
                               }}
@@ -87,7 +111,7 @@ export default function NewEnterprise() {
                         <TextField
                               id="Status"
                               select
-                              value={status}
+                              value={isEdit ? ShowData.purpose : status}
                               onChange={(e) => {
                                 setStatus(e.target.value)
                               }}
@@ -115,16 +139,16 @@ export default function NewEnterprise() {
                     <ResultCep>
                         <div>
                             <p>
-                              Rua Doutor Messuti, 
+                              {isEdit ? ShowData.address.street : "Rua:"} 
                             </p>
                             <p>
-                              Vila Bastos
+                              {isEdit ? ShowData.address.district : "Bairro:"}
                             </p>
                             <p>
-                              Santo André
+                              {isEdit ? ShowData.address.city : "Cidade:"}
                             </p>
                             <p>
-                              SP
+                              {isEdit ? ShowData.address.state : "Estado"}
                             </p>
                       </div>
                     <FormControl fullWidth sx={{ m: 1,}}>
@@ -142,7 +166,7 @@ export default function NewEnterprise() {
                 </BoxSelect>
             </ContentNew>
         </ConatinerNew>
-        <ButtonFooter description="Cadastrar" />
+        <ButtonFooter description={isEdit ? "Editar" : "Cadastrar"} />
     </>
     )
 }

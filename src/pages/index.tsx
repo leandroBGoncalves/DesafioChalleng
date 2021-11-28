@@ -12,22 +12,11 @@ import {
 } from "./styleSummary";
 import NewEnterprise from "../components/NewEnterprise";
 import Header from "../components/Header";
+import ShowListEnterprise from "./ShowEnterprise";
 
-interface HomeProps {
-    id: string,
-    name: string,
-    purpose: string,
-    status: string,
-    address: {
-        street: string,
-        number: number,
-        district: any,
-        state: string,
-    }
-}
 
 export default function Home() {
-    const [enterprises, setEnterprises] = useState<HomeProps[]>([]);
+    const [enterprises, setEnterprises] = useState([]);
     const [registerEnterprise, setregisterEnterprise] = useState(false);
     const [isHome, setIsHome] = useState(true);
 
@@ -46,6 +35,10 @@ function handleHereNewEnterprise() {
     setregisterEnterprise(true);
 }
 
+function handleHome() {
+    setregisterEnterprise(false);
+    setIsHome(true);
+}
 
 
     return (
@@ -55,7 +48,7 @@ function handleHereNewEnterprise() {
         </Head>
 
         <main>
-            {registerEnterprise && <NewEnterprise />}
+            {registerEnterprise && <NewEnterprise handleHome={handleHome}/>}
             {isHome &&
             <>
             <Header 
@@ -63,6 +56,7 @@ function handleHereNewEnterprise() {
             button={true} 
             IconReturn={false} 
             PushButton={handleHereNewEnterprise}
+            PushButtonReturn={handleHome}
             />
             <ContainertLupa>
                 <ContentLupa>
@@ -74,22 +68,7 @@ function handleHereNewEnterprise() {
             </ContainertLupa>
             {enterprises.map((data) => {
                 return (
-                    <ContainerHome key={data.id}>
-                        <ContentHome>
-                            <div>
-                                <BoxNameEnterprise>                      
-                                    <span>{data.name}</span>
-                                    <img src="/images/Vector.svg" alt="Icone de Lapis" />
-                                    <img src="/images/Vector-1.svg" alt="Icone de Lixeira" />
-                                </BoxNameEnterprise>
-                                <p>{data.address.street}, {data.address.number} - {data.address.district}, {data.address.state}</p>
-                            </div>
-                            <ContentStatus>
-                                <div>{data.status === "RELEASE" ? "Lançamento" : data.status}</div>
-                                <div>{data.purpose === "HOME" ? "Residencial" : data.purpose}</div>
-                            </ContentStatus>
-                        </ContentHome>
-                    </ContainerHome>
+                    <ShowListEnterprise handleHome={handleHome} data={data} />
                 )
             })}
             <ButtonFooter description="Carregar mais"/>

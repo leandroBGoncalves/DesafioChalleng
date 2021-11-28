@@ -1,4 +1,3 @@
-import router from 'next/router';
 import { 
     BoxRetur, 
     HeaderContainerAll, 
@@ -10,16 +9,17 @@ interface HeaderProps {
     button: Boolean,
     IconReturn: Boolean,
     PushButton: () => void,
+    PushButtonReturn: () => void
 }
 
 
-export default function Header({title, button, IconReturn, PushButton}: HeaderProps) {
+export default function Header({title, button, IconReturn, PushButton, PushButtonReturn}: HeaderProps) {
 
     return (
         <HeaderContainerAll>
             {IconReturn && 
             <BoxRetur>
-                <img onClick={() => router.push('/')} src="/images/Return.svg" alt="Icone Retornar" />
+                <img onClick={PushButtonReturn} src="/images/Return.svg" alt="Icone Retornar" />
             </BoxRetur>}
             <BoxAdd return={false}>
                 <h5>{title}</h5>
