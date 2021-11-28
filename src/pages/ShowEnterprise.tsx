@@ -28,7 +28,6 @@ export default function ShowListEnterprise({data}: ShowListEnterpriseProps) {
     const [openModal, setOpenModal] = useState(false);
     const [isEdit, setIsEdit] = useState(false);
 
-        console.log(data)
     return (
         <ContainerHome key={data.id}>
             <ContentHome>

@@ -1,9 +1,11 @@
-import { useState } from "react";
-import { MenuItem, TextField, FormControl } from "@material-ui/core";
-import { BoxSelect, ConatinerNew, ContentNew, HeaderNew, ResultCep } from "./style";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { MenuItem, TextField, FormControl, IconButton } from "@material-ui/core";
+import { BoxCep, BoxSelect, ConatinerNew, ContentNew, HeaderNew, ResultCep } from "./style";
 
 import Header from '../Header/index';
 import ButtonFooter from "../buttonFooter/buttonFooter";
+import { apiResolver } from "next/dist/server/api-utils";
 
 interface NewEnterpriseProps {
   handleHome: () => void,
@@ -29,8 +31,35 @@ export default function NewEnterprise({handleHome, ShowData, isEdit, closeModal}
     const [currency, setCurrency] = useState('Lançamento');
     const [name, setName] = useState(isEdit ? ShowData.name : 'Nome do empreendimento');
     const [status, setStatus] = useState('Residencial');
-    const [cep, setCep] = useState(isEdit ? ShowData.address.cep : 'CEP');
+    const [cep, setCep] = useState();
     const [number, setNumber] = useState(isEdit ? ShowData.address.number : 'Numero')
+
+   async function CepQuery() {
+        await axios.get(`https://viacep.com.br/ws/${cep}/json/`).then((response) => {
+          console.log(response.data)
+        })
+    }
+
+  function handleCep(e) {
+    setCep(e.target.value);
+  }
+
+  {/*  async function CreateEnterprise() {
+      await axios.post('http://localhost:3001/enterprises', {
+        name: name,
+        status: currency,
+        purpose: status,
+        ri_number: "",
+        address: {
+        street: "Rua Lucinda Ferreira",
+        number: number,
+        district: "Ipiranga",
+        city: "São Paulo",
+        state: "SP",
+        cep: cep
+      }
+    })
+  }*/}
 
     function handleHomeFromEdit() {
       closeModal(false);
@@ -125,17 +154,21 @@ export default function NewEnterprise({handleHome, ShowData, isEdit, closeModal}
                           ))}
                         </TextField>
                     </FormControl>
+                    <BoxCep>
                     <FormControl fullWidth sx={{ m: 1,}}>
                         <TextField
                               id="cep"
                               value={cep}
-                              onChange={(e) => {
-                                setCep(e.target.value)
-                              }}
+                              placeholder={isEdit ? ShowData.address.cep : 'CEP'}
+                              onChange={handleCep}
                               variant="standard"
                               fullWidth
                         />
                     </FormControl>
+                        <IconButton onClick={CepQuery} type="submit" sx={{ p: '10px' }} aria-label="search">
+                          <img src="/images/Vector (1).svg" />
+                        </IconButton>
+                    </BoxCep>
                     <ResultCep>
                         <div>
                             <p>
@@ -157,6 +190,7 @@ export default function NewEnterprise({handleHome, ShowData, isEdit, closeModal}
                               value={number}
                               onChange={(e) => {
                                 setNumber(e.target.value)
+                                CepQuery()
                               }}
                               variant="standard"
                               fullWidth

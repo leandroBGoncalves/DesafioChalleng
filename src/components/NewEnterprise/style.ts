@@ -54,6 +54,7 @@ export const ResultCep = styled.div`
     flex-direction: column;
     justify-content: flex-end;
 
+
     p {
         width: 50%;
         padding: 0 8px;
@@ -62,4 +63,8 @@ export const ResultCep = styled.div`
             margin-top: 20px;
         }
     }
+`;
+
+export const BoxCep = styled.div`
+    display: flex;
 `;
