@@ -27,7 +27,9 @@ interface HomeProps {
 }
 
 export default function Home() {
-    const [enterprises, setEnterprises] = useState<HomeProps[]>([])
+    const [enterprises, setEnterprises] = useState<HomeProps[]>([]);
+    const [registerEnterprise, setregisterEnterprise] = useState(false);
+    const [isHome, setIsHome] = useState(true);
 
 const Enterprises = async () => {
     await axios.get('http://localhost:3001/enterprises').then((response) => {
@@ -39,6 +41,12 @@ useEffect(() => {
     Enterprises()
 }, [])
 
+function handleHereNewEnterprise() {
+    setIsHome(false);
+    setregisterEnterprise(true);
+}
+
+
 
     return (
       <>
@@ -47,9 +55,15 @@ useEffect(() => {
         </Head>
 
         <main>
-            <NewEnterprise />
-            {/*
-            <Header title="Empreendimentos" button={true}/>
+            {registerEnterprise && <NewEnterprise />}
+            {isHome &&
+            <>
+            <Header 
+            title="Empreendimentos" 
+            button={true} 
+            IconReturn={false} 
+            PushButton={handleHereNewEnterprise}
+            />
             <ContainertLupa>
                 <ContentLupa>
                     <div>
@@ -77,8 +91,10 @@ useEffect(() => {
                         </ContentHome>
                     </ContainerHome>
                 )
-            })}*/}
-            <ButtonFooter />
+            })}
+            <ButtonFooter description="Carregar mais"/>
+            </>
+            }
         </main>
       </>
     )

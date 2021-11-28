@@ -48,14 +48,15 @@ export const BoxSelect = styled.div`
 `;
 
 export const ResultCep = styled.div`
-    height: 10rem;
-    padding: 0 8px;
+    height: 15rem;
+    padding: 0 10px;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
 
     p {
-        width: 35%;
+        width: 50%;
+        padding: 0 8px;
 
         & + p {
             margin-top: 20px;

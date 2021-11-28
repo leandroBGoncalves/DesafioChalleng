@@ -3,12 +3,14 @@ import { MenuItem, TextField, FormControl } from "@material-ui/core";
 import { BoxSelect, ConatinerNew, ContentNew, HeaderNew, ResultCep } from "./style";
 
 import Header from '../Header/index';
+import ButtonFooter from "../buttonFooter/buttonFooter";
 
 export default function NewEnterprise() {
     const [currency, setCurrency] = useState('Lançamento');
     const [name, setName] = useState('Nome do empreendimento');
     const [status, setStatus] = useState('Residencial');
     const [cep, setCep] = useState('CEP');
+    const [number, setNumber] = useState('Numero')
 
 
     const currencies = [
@@ -43,7 +45,7 @@ export default function NewEnterprise() {
 
     return (
         <>
-        <Header title="Cadastro de empreendimento" button={false}/>
+        <Header title="Cadastro de empreendimento" button={false} IconReturn={true} PushButton/>
         <ConatinerNew>
             <ContentNew>
                 <HeaderNew>
@@ -113,19 +115,34 @@ export default function NewEnterprise() {
                     <ResultCep>
                         <div>
                             <p>
-                                Rua Doutor Messuti, 
-                                Vila Bastos
-                                Santo André
-                                SP
+                              Rua Doutor Messuti, 
                             </p>
                             <p>
-                                339
+                              Vila Bastos
                             </p>
-                        </div>
+                            <p>
+                              Santo André
+                            </p>
+                            <p>
+                              SP
+                            </p>
+                      </div>
+                    <FormControl fullWidth sx={{ m: 1,}}>
+                        <TextField
+                              id="Number"
+                              value={number}
+                              onChange={(e) => {
+                                setNumber(e.target.value)
+                              }}
+                              variant="standard"
+                              fullWidth
+                        />
+                    </FormControl>
                     </ResultCep>
                 </BoxSelect>
             </ContentNew>
         </ConatinerNew>
+        <ButtonFooter description="Cadastrar" />
     </>
     )
 }

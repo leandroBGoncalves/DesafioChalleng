@@ -1,9 +1,13 @@
 import { ContainerButton } from "./style";
 
-export default function ButtonFooter() {
+interface ButtonFooterProps {
+    description: string,
+}
+
+export default function ButtonFooter({description}: ButtonFooterProps) {
     return (
         <ContainerButton>
-            <button>Carregar mais</button>
+            <button>{description}</button>
         </ContainerButton>
     )
 }

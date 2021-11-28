@@ -13,10 +13,10 @@ export const HeaderContainerAll = styled.header`
 
 `
 
-export const BoxAdd = styled.div`
-        width: 90%;
+export const BoxAdd = styled.div<{ return: boolean }>`
+        width: ${props => (props.return ? `92%` : `100%`)};
         height: 100%;
-        padding: 0 10rem;
+        padding: ${props => (props.return ? `0 10rem 0 2rem` : `0 10rem`)};
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -56,5 +56,13 @@ export const BoxAdd = styled.div`
 `;
 
 export const BoxRetur = styled.div`
-    width: 10%;
+    width: 8%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+    img {
+        cursor: pointer;
+    }
 `;
