@@ -18,25 +18,23 @@
   },
   "enterprises": [
     {
-      "id": "PA01",
-      "name": "Sirius Vila Bastos",
-      "status": "RELEASE",
-      "purpose": "HOME",
-      "ri_number": "123321",
+      "name": "Sirius Vila Bastos I",
+      "status": "Lançamento",
+      "purpose": "Residencial",
       "address": {
-        "district": "Vila Bastos",
-        "city": "Santo André",
-        "street": "Rua Doutor Messuti",
-        "state": "SP",
+        "street": "Rua",
         "number": "339",
-        "cep": "60000000"
-      }
+        "district": "Bairro",
+        "city": "Cidade",
+        "state": "Estado"
+      },
+      "id": "PA01"
     },
     {
       "id": "PA02",
       "name": "Moriah Ipiranga",
-      "status": "RELEASE",
-      "purpose": "HOME",
+      "status": "Lançamento",
+      "purpose": "Residencial",
       "ri_number": "321123",
       "address": {
         "street": "Rua Lucinda Ferreira",
@@ -48,10 +46,9 @@
       }
     },
     {
-      "id": "PA03",
       "name": "Sirius Campinas",
-      "status": "RELEASE",
-      "purpose": "HOME",
+      "status": "Lançamento",
+      "purpose": "Residencial",
       "ri_number": "987654",
       "address": {
         "street": "Av. Aquidabã",
@@ -60,7 +57,63 @@
         "city": "Campinas",
         "state": "SP",
         "cep": "60000000"
-      }
+      },
+      "id": "PA03"
+    },
+    {
+      "name": "Dubai Resort II",
+      "status": "Lançamento",
+      "purpose": "Residencial",
+      "address": {
+        "street": "Rua",
+        "number": "8569",
+        "district": "Bairro",
+        "city": "Cidade",
+        "state": "Estado"
+      },
+      "id": "fqkq6nh"
+    },
+    {
+      "name": "New Tower Enterprise",
+      "status": "Breve lançamento",
+      "purpose": "Comercial",
+      "address": {
+        "street": "Rua Adriano Metello",
+        "number": "21",
+        "district": "Coronel Antonino",
+        "city": "Campo Grande",
+        "state": "MS",
+        "cep": "79011420"
+      },
+      "id": "SXl4NzO"
+    },
+    {
+      "name": "Good Inc Coworking",
+      "status": "Em obras",
+      "purpose": "Comercial",
+      "address": {
+        "street": "Rua Catanduva",
+        "number": "225",
+        "district": "Coronel Antonino",
+        "city": "Campo Grande",
+        "state": "MS",
+        "cep": "79011400"
+      },
+      "id": "Da8DiOD"
+    },
+    {
+      "name": "Village Campo Grande",
+      "status": "Pronto para morar",
+      "purpose": "Residencial",
+      "address": {
+        "street": "Rua Purús",
+        "number": "142",
+        "district": "Jardim Colúmbia",
+        "city": "Campo Grande",
+        "state": "MS",
+        "cep": "79018110"
+      },
+      "id": "CmcuPHJ"
     }
   ]
 }

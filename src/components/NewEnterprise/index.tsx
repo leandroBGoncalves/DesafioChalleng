@@ -1,7 +1,20 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { MenuItem, TextField, FormControl, IconButton } from "@material-ui/core";
-import { BoxCep, BoxSelect, ConatinerNew, ContentNew, HeaderNew, ResultCep } from "./style";
+import Router from 'next/router'
+import { 
+  MenuItem, 
+  TextField, 
+  FormControl, 
+  IconButton 
+} from "@material-ui/core";
+import { 
+  BoxCep, 
+  BoxSelect, 
+  ConatinerNew, 
+  ContentNew, 
+  HeaderNew, 
+  ResultCep 
+} from "./style";
 
 import Header from '../Header/index';
 import ButtonFooter from "../buttonFooter/buttonFooter";
@@ -23,12 +36,22 @@ interface NewEnterpriseProps {
         state: string,
         cep: string,
     }
-},
+  },
+  addressCep: {
+    logradouro: string,
+  }
   isEdit: boolean,
   closeModal: () => void,
+  reloadEnterprises: () => void,
 }
 
-export default function NewEnterprise({handleHome, ShowData, isEdit, closeModal}: NewEnterpriseProps) {
+export default function NewEnterprise({
+  handleHome, 
+  ShowData, 
+  isEdit, 
+  closeModal,
+  reloadEnterprises,
+}: NewEnterpriseProps) {
     const [currency, setCurrency] = useState('Lançamento');
     const [name, setName] = useState(isEdit ? ShowData.name : 'Nome do empreendimento');
     const [status, setStatus] = useState('Residencial');
@@ -54,7 +77,8 @@ export default function NewEnterprise({handleHome, ShowData, isEdit, closeModal}
     }
 
    async function CepQuery() {
-        await axios.get(`https://viacep.com.br/ws/${cep}/json/`).then((response) => {
+        await axios.get(`https://viacep.com.br/ws/${cep}/json/`)
+        .then((response) => {
           const data = response.data;
           setAddressCep(data)
           setOpenModal(true)
@@ -65,6 +89,29 @@ export default function NewEnterprise({handleHome, ShowData, isEdit, closeModal}
 
   function handleCep(e) {
     setCep(e.target.value);
+  }
+
+  async function upDateEnterprise() {
+    await axios.put(`http://localhost:3001/enterprises/${ShowData.id}`, {
+      name: name,
+      status: currency,
+      purpose: status,
+      address: {
+      street: street,
+      number: number,
+      district: district,
+      city: city,
+      state: uf,
+      cep: cep
+    }
+  })
+    .then(() => {
+      window.alert('Empreendimento atualizado')
+      reloadEnterprises()
+      closeModal(false)
+    }).catch((err) => {
+      window.alert(err)
+    })
   }
 
   async function CreateEnterprise() {
@@ -81,10 +128,13 @@ export default function NewEnterprise({handleHome, ShowData, isEdit, closeModal}
         cep: cep
       }
     }).then(() => {
-      window.alert('Sucesso')
+      window.alert('Empreendimento criado com sucesso')
+      handleHome()
+      setTimeout(() => {
+        reloadEnterprises()
+      }, 500);
     }).catch((err) => {
-      console.log(err);
-      window.alert(err);
+      window.alert(`Erro ao Criar empreendimento - ${err}`);
     })
   }
 
@@ -125,7 +175,13 @@ export default function NewEnterprise({handleHome, ShowData, isEdit, closeModal}
 
     return (
         <>
-        <Header title={isEdit ? "Editar empreendimento" : "Cadastro de empreendimento"} button={false} IconReturn={true} PushButton={handleHome} PushButtonReturn={isEdit ? handleHomeFromEdit : handleHome}/>
+        <Header 
+        title={isEdit ? "Editar empreendimento" : "Cadastro de empreendimento"} 
+        button={false} 
+        IconReturn={true} 
+        PushButton={handleHome} 
+        PushButtonReturn={isEdit ? handleHomeFromEdit : handleHome}
+        />
         <ConatinerNew>
             <ContentNew>
                 <HeaderNew>
@@ -226,8 +282,16 @@ export default function NewEnterprise({handleHome, ShowData, isEdit, closeModal}
                 </BoxSelect>
             </ContentNew>
         </ConatinerNew>
-        <ModalConfirmAddress openModal={openModal} handleClose={handleCloseModalConfir} address={addressCep} pushButton={confirmAddress}/>
-        <ButtonFooter pushClick={CreateEnterprise} description={isEdit ? "Editar" : "Cadastrar"} />
+        <ModalConfirmAddress 
+        openModal={openModal} 
+        handleClose={handleCloseModalConfir} 
+        address={addressCep} 
+        pushButton={confirmAddress}
+        />
+        <ButtonFooter 
+        pushClick={isEdit ? upDateEnterprise : CreateEnterprise} 
+        description={isEdit ? "Editar" : "Cadastrar"} 
+        />
     </>
     )
 }

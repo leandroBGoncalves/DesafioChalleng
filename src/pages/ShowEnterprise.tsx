@@ -3,7 +3,6 @@ import { Alert, Button, Dialog } from "@material-ui/core";
 import axios from "axios";
 import { useState } from "react";
 import NewEnterprise from "../components/NewEnterprise";
-import { ButtonConfirm, ContainerHomeConfirm } from "./styleModalConfirm";
 import { 
     BoxNameEnterprise, 
     ContainerHome,  
@@ -24,10 +23,11 @@ interface ShowListEnterpriseProps {
         district: any,
         state: string,
     }
-}
+    }
+reloadEnterprises: () => void
 }
 
-export default function ShowListEnterprise({data}: ShowListEnterpriseProps) {
+export default function ShowListEnterprise({data, reloadEnterprises}: ShowListEnterpriseProps) {
     const [openModal, setOpenModal] = useState(false);
     const [isEdit, setIsEdit] = useState(false);
     const [openModalDelete, setOpenModalDelete] = useState(false);
@@ -38,6 +38,7 @@ export default function ShowListEnterprise({data}: ShowListEnterpriseProps) {
         .then(() => {
             window.alert('Sucesso')
             setOpenModalDelete(false)
+            reloadEnterprises()
         }).catch((err) => {
             window.alert(`Erro ao Deletar, ${err}`)
         })
@@ -98,7 +99,12 @@ export default function ShowListEnterprise({data}: ShowListEnterpriseProps) {
             maxWidth="md"
             fullWidth
             >
-            <NewEnterprise ShowData={data} isEdit={isEdit} closeModal={setOpenModal}/>
+            <NewEnterprise 
+            ShowData={data} 
+            isEdit={isEdit} 
+            closeModal={setOpenModal}
+            reloadEnterprises={reloadEnterprises}
+            />
             </Dialog>
         </ContainerHome>
     )

@@ -3,28 +3,36 @@ import axios from "axios";
 import Head from "next/head";
 import ButtonFooter from "../components/buttonFooter/buttonFooter";
 import { 
-    BoxNameEnterprise, 
-    ContainerHome, 
     ContainertLupa, 
-    ContentHome, 
     ContentLupa, 
-    ContentStatus
 } from "./styleSummary";
 import NewEnterprise from "../components/NewEnterprise";
 import Header from "../components/Header";
 import ShowListEnterprise from "./ShowEnterprise";
+import { IconButton, Input, InputAdornment } from "@material-ui/core";
 
 
 export default function Home() {
     const [enterprises, setEnterprises] = useState([]);
     const [registerEnterprise, setregisterEnterprise] = useState(false);
     const [isHome, setIsHome] = useState(true);
+    const [rowsPerPage, setRowsPerPage] = useState(5);
+    const [enterprisesNumber, setEnterprisesNumber] = useState(0)
+    const [search, setSearch] = useState("")
 
 const Enterprises = async () => {
     await axios.get('http://localhost:3001/enterprises').then((response) => {
         setEnterprises(response.data)
 });
 }
+
+function numberEnterprises() {
+    setEnterprisesNumber(enterprises.length)
+}
+
+useEffect(() => {
+    numberEnterprises()
+})
 
 useEffect(() => {
     Enterprises()
@@ -41,6 +49,13 @@ function handleHome() {
 }
 
 
+
+const  handleSearch = enterprises.filter((body) => {
+        return body.name
+        .toLowerCase()
+        .includes(search.toLocaleLowerCase())  
+    })
+
     return (
       <>
         <Head>
@@ -48,7 +63,7 @@ function handleHome() {
         </Head>
 
         <main>
-            {registerEnterprise && <NewEnterprise handleHome={handleHome}/>}
+            {registerEnterprise && <NewEnterprise handleHome={handleHome} reloadEnterprises={Enterprises}/>}
             {isHome &&
             <>
             <Header 
@@ -61,17 +76,30 @@ function handleHome() {
             <ContainertLupa>
                 <ContentLupa>
                     <div>
+                    <Input
+                    fullWidth
+                    id="standard-adornment-password"
+                    onChange={(e) => {
+                        setSearch(e.target.value)
+                    }}
+                    endAdornment={
+                      <InputAdornment onClick={handleSearch} position="start">
+                        <IconButton type="submit" aria-label="search">
                         <img src="/images/Vector (1).svg" alt="Icone Lupa" />
-                        <p>Buscar</p>
+                        Buscar
+                        </IconButton>
+                    </InputAdornment>
+                       }
+                    />
                     </div>
                 </ContentLupa>
             </ContainertLupa>
-            {enterprises.map((data) => {
+            {handleSearch.slice(0, rowsPerPage).map((data) => {
                 return (
-                    <ShowListEnterprise handleHome={handleHome} data={data} />
+                    <ShowListEnterprise handleHome={handleHome} data={data} reloadEnterprises={Enterprises}/>
                 )
             })}
-            <ButtonFooter description="Carregar mais"/>
+            <ButtonFooter description={enterprisesNumber >= rowsPerPage ? "Carregar mais" : "Nada mais para carregar..."} pushClick={() => setRowsPerPage(rowsPerPage + 5)}/>
             </>
             }
         </main>

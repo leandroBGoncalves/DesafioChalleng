@@ -13,7 +13,13 @@ interface HeaderProps {
 }
 
 
-export default function Header({title, button, IconReturn, PushButton, PushButtonReturn}: HeaderProps) {
+export default function Header({
+    title, 
+    button, 
+    IconReturn, 
+    PushButton, 
+    PushButtonReturn
+}: HeaderProps) {
 
     return (
         <HeaderContainerAll>

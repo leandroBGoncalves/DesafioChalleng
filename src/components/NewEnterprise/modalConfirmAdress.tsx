@@ -1,6 +1,13 @@
 import { useState } from 'react';
-import { Alert, Dialog, DialogProps } from '@material-ui/core';
-import { ButtonConfirm, ContainerHome } from './styleModal';
+import { 
+    Alert, 
+    Dialog, 
+    DialogProps 
+} from '@material-ui/core';
+import { 
+    ButtonConfirm, 
+    ContainerHome 
+} from './styleModal';
 
 interface ModalConfirmProps {
     openModal: boolean,
@@ -14,7 +21,12 @@ interface ModalConfirmProps {
     }
 }
 
-export default function ModalConfirmAddress({openModal, address, handleClose, pushButton}: ModalConfirmProps) {
+export default function ModalConfirmAddress({
+    openModal, 
+    address, 
+    handleClose, 
+    pushButton
+}: ModalConfirmProps) {
 
     return (
         <Dialog
