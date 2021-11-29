@@ -67,22 +67,26 @@ export default function NewEnterprise({handleHome, ShowData, isEdit, closeModal}
     setCep(e.target.value);
   }
 
-  {/*  async function CreateEnterprise() {
+  async function CreateEnterprise() {
       await axios.post('http://localhost:3001/enterprises', {
         name: name,
         status: currency,
         purpose: status,
-        ri_number: "",
         address: {
-        street: "Rua Lucinda Ferreira",
+        street: street,
         number: number,
-        district: "Ipiranga",
-        city: "São Paulo",
-        state: "SP",
+        district: district,
+        city: city,
+        state: uf,
         cep: cep
       }
+    }).then(() => {
+      window.alert('Sucesso')
+    }).catch((err) => {
+      console.log(err);
+      window.alert(err);
     })
-  }*/}
+  }
 
     function handleHomeFromEdit() {
       closeModal(false);
@@ -213,7 +217,6 @@ export default function NewEnterprise({handleHome, ShowData, isEdit, closeModal}
                               value={number}
                               onChange={(e) => {
                                 setNumber(e.target.value)
-                                CepQuery()
                               }}
                               variant="standard"
                               fullWidth
@@ -224,7 +227,7 @@ export default function NewEnterprise({handleHome, ShowData, isEdit, closeModal}
             </ContentNew>
         </ConatinerNew>
         <ModalConfirmAddress openModal={openModal} handleClose={handleCloseModalConfir} address={addressCep} pushButton={confirmAddress}/>
-        <ButtonFooter description={isEdit ? "Editar" : "Cadastrar"} />
+        <ButtonFooter pushClick={CreateEnterprise} description={isEdit ? "Editar" : "Cadastrar"} />
     </>
     )
 }

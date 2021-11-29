@@ -1,7 +1,9 @@
 
-import { Dialog } from "@material-ui/core";
+import { Alert, Button, Dialog } from "@material-ui/core";
+import axios from "axios";
 import { useState } from "react";
 import NewEnterprise from "../components/NewEnterprise";
+import { ButtonConfirm, ContainerHomeConfirm } from "./styleModalConfirm";
 import { 
     BoxNameEnterprise, 
     ContainerHome,  
@@ -12,6 +14,7 @@ import {
 interface ShowListEnterpriseProps {
     data: {
     id: string,
+    value: string,
     name: string,
     purpose: string,
     status: string,
@@ -27,24 +30,61 @@ interface ShowListEnterpriseProps {
 export default function ShowListEnterprise({data}: ShowListEnterpriseProps) {
     const [openModal, setOpenModal] = useState(false);
     const [isEdit, setIsEdit] = useState(false);
+    const [openModalDelete, setOpenModalDelete] = useState(false);
+
+
+    async function DeleteEnterprise(value) {
+        await axios.delete(`http://localhost:3001/enterprises/${value}`)
+        .then(() => {
+            window.alert('Sucesso')
+            setOpenModalDelete(false)
+        }).catch((err) => {
+            window.alert(`Erro ao Deletar, ${err}`)
+        })
+    }
 
     return (
         <ContainerHome key={data.id}>
             <ContentHome>
+            {openModalDelete && 
+            <Alert
+              maxWidth="md"
+              severity="error"
+              action={
+                <>
+                <Button onClick={() => setOpenModalDelete(false)}color="inherit" size="small">
+                  Cancelar
+                </Button>
+                <Button onClick={() => DeleteEnterprise(data.id)}color="inherit" size="small">
+                  Confirmar
+                </Button>
+                </>
+              }
+            >
+              Confirma a exclusão do Empreendimento?
+            </Alert>}
+                {!openModalDelete && 
                 <div>
                     <BoxNameEnterprise>                      
                         <span>{data.name}</span>
-                        <img onClick={() => {
+                        <img 
+                        onClick={() => {
                             setOpenModal(true);
                             setIsEdit(true);
                         }} 
                         src="/images/Vector.svg" 
                         alt="Icone de Lapis" 
                         />
-                        <img src="/images/Vector-1.svg" alt="Icone de Lixeira" />
+                        <img 
+                        onClick={() => {
+                            setOpenModalDelete(true);
+                        }}
+                        src="/images/Vector-1.svg" 
+                        alt="Icone de Lixeira" 
+                        />
                     </BoxNameEnterprise>
                     <p>{data.address.street}, {data.address.number} - {data.address.district}, {data.address.state}</p>
-                </div>
+                </div>}
                 <ContentStatus>
                     <div>{data.status === "RELEASE" ? "Lançamento" : data.status}</div>
                     <div>{data.purpose === "HOME" ? "Residencial" : data.purpose}</div>
@@ -58,7 +98,7 @@ export default function ShowListEnterprise({data}: ShowListEnterpriseProps) {
             maxWidth="md"
             fullWidth
             >
-                <NewEnterprise ShowData={data} isEdit={isEdit} closeModal={setOpenModal}/>
+            <NewEnterprise ShowData={data} isEdit={isEdit} closeModal={setOpenModal}/>
             </Dialog>
         </ContainerHome>
     )
