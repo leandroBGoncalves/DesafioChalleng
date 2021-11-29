@@ -6,6 +6,7 @@ import { BoxCep, BoxSelect, ConatinerNew, ContentNew, HeaderNew, ResultCep } fro
 import Header from '../Header/index';
 import ButtonFooter from "../buttonFooter/buttonFooter";
 import { apiResolver } from "next/dist/server/api-utils";
+import ModalConfirmAddress from "./modalConfirmAdress";
 
 interface NewEnterpriseProps {
   handleHome: () => void,
@@ -33,10 +34,32 @@ export default function NewEnterprise({handleHome, ShowData, isEdit, closeModal}
     const [status, setStatus] = useState('Residencial');
     const [cep, setCep] = useState();
     const [number, setNumber] = useState(isEdit ? ShowData.address.number : 'Numero')
+    const [openModal, setOpenModal] = useState(false);
+    const [addressCep, setAddressCep] = useState([]);
+    const [street, setStreet] = useState('Rua');
+    const [district, setDistrict] = useState('Bairro');
+    const [city, setCity] = useState('Cidade');
+    const [uf, setUf] = useState('Estado');
+
+    function handleCloseModalConfir() {
+      setOpenModal(false)
+    }
+
+    function confirmAddress() {
+      setStreet(addressCep.logradouro);
+      setDistrict(addressCep.bairro);
+      setCity(addressCep.localidade);
+      setUf(addressCep.uf);
+      setOpenModal(false)
+    }
 
    async function CepQuery() {
         await axios.get(`https://viacep.com.br/ws/${cep}/json/`).then((response) => {
-          console.log(response.data)
+          const data = response.data;
+          setAddressCep(data)
+          setOpenModal(true)
+        }).catch(() => {
+          window.alert('Verifique se o CEP esta correto Ex: 79000111')
         })
     }
 
@@ -172,16 +195,16 @@ export default function NewEnterprise({handleHome, ShowData, isEdit, closeModal}
                     <ResultCep>
                         <div>
                             <p>
-                              {isEdit ? ShowData.address.street : "Rua:"} 
+                              {isEdit ? ShowData.address.street : street} 
                             </p>
                             <p>
-                              {isEdit ? ShowData.address.district : "Bairro:"}
+                              {isEdit ? ShowData.address.district : district}
                             </p>
                             <p>
-                              {isEdit ? ShowData.address.city : "Cidade:"}
+                              {isEdit ? ShowData.address.city : city}
                             </p>
                             <p>
-                              {isEdit ? ShowData.address.state : "Estado"}
+                              {isEdit ? ShowData.address.state : uf}
                             </p>
                       </div>
                     <FormControl fullWidth sx={{ m: 1,}}>
@@ -200,6 +223,7 @@ export default function NewEnterprise({handleHome, ShowData, isEdit, closeModal}
                 </BoxSelect>
             </ContentNew>
         </ConatinerNew>
+        <ModalConfirmAddress openModal={openModal} handleClose={handleCloseModalConfir} address={addressCep} pushButton={confirmAddress}/>
         <ButtonFooter description={isEdit ? "Editar" : "Cadastrar"} />
     </>
     )
