@@ -30,6 +30,8 @@ function numberEnterprises() {
     setEnterprisesNumber(enterprises.length)
 }
 
+console.log(enterprises)
+
 useEffect(() => {
     numberEnterprises()
 })

@@ -37,13 +37,21 @@ interface NewEnterpriseProps {
         cep: string,
     }
   },
-  addressCep: {
-    logradouro: string,
-  }
+  closeModal: any,
   isEdit: boolean,
-  closeModal: () => void,
   reloadEnterprises: () => void,
 }
+
+interface confirmAddressProps {
+  addressCep: {
+    logradouro: string,
+    bairro: string,
+    localidade: string,
+    uf: string,
+  }
+}
+
+
 
 export default function NewEnterprise({
   handleHome, 
@@ -64,11 +72,15 @@ export default function NewEnterprise({
     const [city, setCity] = useState('Cidade');
     const [uf, setUf] = useState('Estado');
 
+    var closeModal: any
+
+    var isEdit: boolean
+
     function handleCloseModalConfir() {
       setOpenModal(false)
     }
 
-    function confirmAddress() {
+    function confirmAddress({addressCep}: confirmAddressProps) {
       setStreet(addressCep.logradouro);
       setDistrict(addressCep.bairro);
       setCity(addressCep.localidade);
@@ -87,7 +99,7 @@ export default function NewEnterprise({
         })
     }
 
-  function handleCep(e) {
+  function handleCep(e: any) {
     setCep(e.target.value);
   }
 

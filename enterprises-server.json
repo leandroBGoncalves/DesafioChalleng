@@ -88,32 +88,17 @@
       "id": "SXl4NzO"
     },
     {
-      "name": "Good Inc Coworking",
-      "status": "Em obras",
-      "purpose": "Comercial",
-      "address": {
-        "street": "Rua Catanduva",
-        "number": "225",
-        "district": "Coronel Antonino",
-        "city": "Campo Grande",
-        "state": "MS",
-        "cep": "79011400"
-      },
-      "id": "Da8DiOD"
-    },
-    {
-      "name": "Village Campo Grande",
-      "status": "Pronto para morar",
+      "name": "teste 25",
+      "status": "Lançamento",
       "purpose": "Residencial",
       "address": {
-        "street": "Rua Purús",
-        "number": "142",
-        "district": "Jardim Colúmbia",
-        "city": "Campo Grande",
-        "state": "MS",
-        "cep": "79018110"
+        "street": "Rua",
+        "number": "3059",
+        "district": "Bairro",
+        "city": "Cidade",
+        "state": "Estado"
       },
-      "id": "CmcuPHJ"
+      "id": "-vqDR6X"
     }
   ]
 }
